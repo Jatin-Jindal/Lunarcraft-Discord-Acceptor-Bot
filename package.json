@@ -1,0 +1,20 @@
+{
+    "name": "woofcraft-js",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon -L -P 500 src/index.js",
+        "start": "node src/index.js",
+        "deploy": "node src/deploy-commands.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@discordjs/builders": "^0.13.0",
+        "@discordjs/rest": "^0.4.1",
+        "discord-api-types": "^0.32.0",
+        "discord.js": "^13.6.0"
+    }
+}
