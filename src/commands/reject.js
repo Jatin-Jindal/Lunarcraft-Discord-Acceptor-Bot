@@ -33,7 +33,7 @@ module.exports = {
                 .addField("Member Kicked", `${member.user}'s was kicked`);
 
             interaction.guild.channels.cache.get("968805196098592801").send({ embeds: [logEmbed] });
-            await interaction.editReply(`${member} has been accepted into the server.`);
+            await interaction.editReply(`${member} has been rejected from the server.`);
 
             // Inform the user that they have been rejected
             try {
