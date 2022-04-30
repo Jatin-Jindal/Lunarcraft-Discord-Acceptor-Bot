@@ -1,15 +1,16 @@
 {
     "name": "woofcraft-js",
     "version": "1.0.0",
-    "description": "",
+    "description": "Wolfcraft Discord Bot to accept and remove users",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon -L -P 500 src/index.js",
         "start": "node src/index.js",
         "deploy": "node src/deploy-commands.js"
     },
-    "keywords": [],
-    "author": "",
+    "engines": {
+        "node": ">=16.9.0"
+    },
+    "author": "Jatin-Jindal",
     "license": "ISC",
     "dependencies": {
         "@discordjs/builders": "^0.13.0",
