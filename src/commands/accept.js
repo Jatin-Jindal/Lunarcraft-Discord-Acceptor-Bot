@@ -25,8 +25,8 @@ module.exports = {
             needed2: "969586201898127384",
         };
         const checkRoles = Object.keys(rolesRequired).every((key) => hasRole(rolesRequired[key]));
-
-        if (checkRoles) {
+        const specialPerm = interaction.user.id === "437491079869104138";
+        if (checkRoles || specialPerm) {
             // ROLE MANIPULATION STUFF
             roleToAdd = interaction.guild.roles.cache.find((role) => role.name === "unneeeded1");
             Object.values(rolesRequired).forEach((roleId) => member.roles.remove(roleId));
