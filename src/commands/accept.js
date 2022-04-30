@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const { ownerID, loggingChannel } = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,7 +26,7 @@ module.exports = {
             needed2: "969586201898127384",
         };
         const checkRoles = Object.keys(rolesRequired).every((key) => hasRole(rolesRequired[key]));
-        const specialPerm = interaction.user.id === "437491079869104138";
+        const specialPerm = interaction.user.id === ownerID;
         if (checkRoles || specialPerm) {
             // ROLE MANIPULATION STUFF
             roleToAdd = interaction.guild.roles.cache.find((role) => role.name === "unneeeded1");
@@ -53,7 +54,7 @@ module.exports = {
                     `${member.user}'s username was changed to ${username}.`
                 );
             }
-            interaction.guild.channels.cache.get("968805196098592801").send({ embeds: [logEmbed] });
+            interaction.guild.channels.cache.get(loggingChannel).send({ embeds: [logEmbed] });
             await interaction.editReply(`${member} has been accepted into the server.`);
 
             // Inform the user that they have been accepted
@@ -62,6 +63,7 @@ module.exports = {
                 botCommands: "657605715921469480",
                 claims: "869554027745148948",
                 mcVersion: "1.17.1",
+                sendChannel: "968805196098592801",
             };
             const informMessage =
                 `Hello ${member} and welcome to WolfCraft, we’re glad to have you here. \n\n` +
@@ -69,7 +71,9 @@ module.exports = {
                 `I would also take a quick look at our <#${acceptMessageStuff.claims}> channel, this is how we “claim” land so there isn’t any confusion on who’s stuff is who’s. This is completely trust based, but we do have ways to make sure your claim stays safe (:\n\n` +
                 `Before joining the server I would recommend going through the rules one more time so you can be absolutely sure you won’t accidentally break any of them! \n\n` +
                 `- if you have any questions ask in the chat or server help 😄`;
-            interaction.guild.channels.cache.get("968805196098592801").send(informMessage);
+            interaction.guild.channels.cache
+                .get(acceptMessageStuff.sendChannel)
+                .send(informMessage);
         } else {
             await interaction.editReply(
                 `Can Not accept ${member}${

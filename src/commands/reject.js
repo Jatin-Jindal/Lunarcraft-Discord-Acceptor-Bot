@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const { loggingChanel } = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -32,7 +33,7 @@ module.exports = {
                 .setColor("#7BFA5A")
                 .addField("Member Kicked", `${member.user}'s was kicked`);
 
-            interaction.guild.channels.cache.get("968805196098592801").send({ embeds: [logEmbed] });
+            interaction.guild.channels.cache.get(loggingChanel).send({ embeds: [logEmbed] });
             await interaction.editReply(`${member} has been rejected from the server.`);
 
             // Inform the user that they have been rejected

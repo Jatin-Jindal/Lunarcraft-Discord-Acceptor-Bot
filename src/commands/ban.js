@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const { loggingChannel } = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,7 +32,7 @@ module.exports = {
                 .setTitle(`${member.user.username} Banned`)
                 .setDescription(`${interaction.user} banned ${member}${reason}`)
                 .setColor("#7BFA5A");
-            interaction.guild.channels.cache.get("968805196098592801").send({ embeds: [logEmbed] });
+            interaction.guild.channels.cache.get(loggingChannel).send({ embeds: [logEmbed] });
             // TODO: Ban the player in console
 
             // Inform the user that they have been rejected
