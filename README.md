@@ -22,6 +22,7 @@ A bot made for the [Wolfcraft Discord Server](https://discord.gg/gXxWwbPWAt "Inv
 
 ### How to Run
 
+1. Get the repository locally `git clone https://github.com/Jatin-Jindal/Wolfcraft-Discord-Acceptor-Bot`
 1. Add your bot token in the config.json (Based on [config.json.sample](./config.json.sample "Sample config"))
 1. Install the required modules with your preferred package manager:
     - [npm](https://www.npmjs.com "npm")
