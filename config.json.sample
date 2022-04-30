@@ -1,0 +1,5 @@
+{
+    "token": "YOUR BOT TOKEN HERE",
+    "clientId": "BOT USER ID",
+    "guildId": "DEV GUILD ID (The guild you want to test the bot in)"
+}
