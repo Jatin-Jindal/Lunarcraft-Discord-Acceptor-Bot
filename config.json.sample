@@ -2,6 +2,5 @@
     "token": "YOUR BOT TOKEN HERE",
     "clientId": "BOT USER ID",
     "guildId": "DEV GUILD ID (The guild you want to test the bot in)",
-    "loggingChannel": "CHANNEL ID (Where you want logs to go)",
     "ownerID": "OWNER ID (The owner of the bot)"
 }
