@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const { ownerID, loggingChannel } = require("../../config.json");
+const { ownerID } = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -54,7 +54,7 @@ module.exports = {
                     `${member.user}'s username was changed to ${username}.`
                 );
             }
-            interaction.guild.channels.cache.get(loggingChannel).send({ embeds: [logEmbed] });
+            interaction.guild.channels.cache.get("968805196098592801").send({ embeds: [logEmbed] });
             await interaction.editReply(`${member} has been accepted into the server.`);
 
             // Inform the user that they have been accepted
