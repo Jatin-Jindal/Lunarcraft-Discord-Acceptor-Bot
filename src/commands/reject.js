@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const { loggingChanel } = require("../../config.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,25 +29,27 @@ module.exports = {
             logEmbed = new MessageEmbed()
                 .setTitle(`${member.user.username} Rejected`)
                 .setDescription(`${interaction.user} rejected ${member}${reason}`)
-                .setColor("#7BFA5A")
-                .addField("Member Kicked", `${member.user}'s was kicked`);
-
-            interaction.guild.channels.cache.get(loggingChanel).send({ embeds: [logEmbed] });
-            await interaction.editReply(`${member} has been rejected from the server.`);
+                .setColor("#7BFA5A");
 
             // Inform the user that they have been rejected
-            try {
-                const informMessage = `You were NOT accepted in in Wolf Craft${reason}`;
-                const dmChannel = await member.createDM(true);
-                dmChannel.send(informMessage);
-                if (member.kickable) member.kick(reason);
-                else
-                    await interaction.followUp({
-                        content: `${member} is not kickable. Please contact an administrator.`,
-                        ephemeral: true,
-                    });
-            } catch (error) {
-                console.error(error);
+            if (member.kickable) {
+                try {
+                    await interaction.editReply(`${member} has been rejected from the server.`);
+                    logEmbed.addField("Member Kicked", `${member.user}'s was kicked`);
+                    const informMessage = `You were NOT accepted in in Wolf Craft${reason}`;
+                    member.send(informMessage);
+                    interaction.guild.channels.cache
+                        .get("968805196098592801")
+                        .send({ embeds: [logEmbed] });
+                    member.kick(reason);
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                await interaction.editReply({
+                    content: `${member} is not kickable. Please contact an administrator.`,
+                    ephemeral: true,
+                });
             }
         }
     },
