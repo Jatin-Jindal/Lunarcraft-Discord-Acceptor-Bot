@@ -13,22 +13,15 @@ for (const file of commandFiles) {
 
 const rest = new REST({ version: "9" }).setToken(token);
 
-(async () => {
-    try {
-        console.log("Started refreshing application (/) commands.");
+// Guild Commands push (DEV)
+console.log("Started refreshing application (/) commands.");
+rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+    body: commands,
+}).then(() => console.log("Successfully reloaded application (/) commands"));
 
-        await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
-            body: commands,
-        });
-
-        // GLOBAL PUSH
-        /*  await rest.put(Routes.applicationCommands(clientId), {
-         *      body: commands,
-         *  });
-         */
-
-        console.log("Successfully reloaded application (/) commands.");
-    } catch (error) {
-        console.error(error);
-    }
-})();
+/* Global Commands push
+console.log("Started refreshing global (/) commands.");
+rest.put(Routes.applicationCommands(clientId), {
+    body: commands,
+}).then(() => console.log("Successfully reloaded global (/) commands"));
+/* */
