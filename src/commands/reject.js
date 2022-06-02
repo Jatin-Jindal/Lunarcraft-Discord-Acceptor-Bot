@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+// const { checkBasic } = require("./checks/check");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -18,7 +19,10 @@ module.exports = {
             ? ` because ${interaction.options.getString("reason")}`
             : ".";
         await interaction.deferReply();
-        const checkRoles = true;
+        const checkBasic = (interaction) => {
+            return interaction.channelId === "684908788909867037";
+        };
+        const checkRoles = checkBasic(interaction);
 
         if (checkRoles) {
             // TODO: Check if the user has the required permissions
@@ -50,6 +54,15 @@ module.exports = {
                     content: `${member} is not kickable. Please contact an administrator.`,
                     ephemeral: true,
                 });
+            }
+        } else {
+            try {
+                await interaction.editReply({
+                    content: `https://tenor.com/view/camelot-gif-22738779`,
+                    ephemeral: false,
+                });
+            } catch (error) {
+                console.log(error);
             }
         }
     },

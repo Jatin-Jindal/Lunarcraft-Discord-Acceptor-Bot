@@ -19,7 +19,7 @@ rest.put(Routes.applicationGuildCommands(clientId, guildId), {
     body: commands,
 }).then(() => console.log("Successfully reloaded application (/) commands"));
 
-/* Global Commands push
+/* Global Commands push */
 console.log("Started refreshing global (/) commands.");
 rest.put(Routes.applicationCommands(clientId), {
     body: commands,
