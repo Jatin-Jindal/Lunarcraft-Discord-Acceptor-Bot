@@ -39,9 +39,7 @@ module.exports = {
                 ?.channels.cache.get("672212135505559554") // Application channel
                 ?.messages.fetch()
                 .then((msgs) => {
-                    msgs.find((m) => m.author.id === user.id)
-                        .react("❎")
-                        .catch((e) => console.log(e));
+                    msgs.find((m) => m.author.id === user.id).react("❎");
                 })
                 .catch((e) => console.log(e));
 
@@ -56,11 +54,8 @@ module.exports = {
                 try {
                     await interaction.editReply(`${member} has been rejected from the server.`);
                     logEmbed.addField("Member Kicked", `${member.user}'s was kicked`);
-                    const informMessage = `You were NOT accepted in in Wolf Craft${reason}`;
+                    const informMessage = `You were NOT accepted in Wolf Craft${reason}`;
                     member.send(informMessage);
-                    interaction.guild.channels.cache
-                        .get("789566159732604978")
-                        .send({ embeds: [logEmbed] });
                     member.kick(reason);
                 } catch (error) {
                     await interaction.editReply({
@@ -74,6 +69,7 @@ module.exports = {
                     ephemeral: true,
                 });
             }
+            interaction.guild.channels.cache.get("789566159732604978").send({ embeds: [logEmbed] });
         } else {
             await interaction.editReply({
                 content: `https://tenor.com/view/camelot-gif-22738779`,

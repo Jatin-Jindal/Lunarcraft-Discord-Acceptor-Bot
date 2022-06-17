@@ -20,10 +20,10 @@ module.exports = {
         const username = interaction.options.getString("username");
         const usernameLength = 32;
         await interaction.deferReply();
-        const hasRole = (roleId) => member.roles.cache.find((role) => role.id == roleId);
+        const hasRole = (roleId) => member.roles.cache.has(roleId);
         rolesRequired = {
-            needed1: "672211303368228864",
-            needed2: "672073106134794251",
+            R: "672073106134794251",
+            newMember: "672211303368228864",
         };
         const checkBasic = (interaction) => {
             return (
@@ -31,7 +31,8 @@ module.exports = {
                 interaction.channelId === "789566159732604978"
             );
         };
-        const checkRoles = Object.keys(rolesRequired).every((key) => hasRole(rolesRequired[key]));
+        // const checkRoles = Object.keys(rolesRequired).every((key) => hasRole(rolesRequired[key]));
+        const checkRoles = hasRole("672073106134794251") && hasRole("672211303368228864");
         const specialPerm = interaction.user.id === ownerID;
         const isQueen = interaction?.member.roles.cache.find(
             (role) => role.id == "970431543673753601"
@@ -41,10 +42,9 @@ module.exports = {
         if (checkBasic(interaction) || isQueen || specialPerm) {
             if (checkRoles) {
                 // ROLE MANIPULATION STUFF
-                roleToAdd = interaction.guild.roles.cache.find(
-                    (role) => role.name === "unneeeded1"
-                );
-                Object.values(rolesRequired).forEach((roleId) => member.roles.remove(roleId));
+                roleToAdd = interaction.guild.roles.cache.get("672470358779101203");
+                member.roles.remove(rolesRequired.R);
+                member.roles.remove(rolesRequired.newMember);
                 member.roles.add(roleToAdd);
 
                 // DONE: Send a request to actually whitelist the player IF username is provided
@@ -52,7 +52,8 @@ module.exports = {
                     try {
                         interaction.guild.channels.cache
                             .get("665965513968582658")
-                            .send(`whitelist add ${username}`);
+                            // .send(`whitelist add ${username}`);
+                            .send(`say whitelist add ${username}`);
                     } catch (error) {
                         console.log(
                             `Something went wrong while accepting username = ${username}\n` +
@@ -69,9 +70,7 @@ module.exports = {
                     ?.channels.cache.get("672212135505559554") // Application channel
                     ?.messages.fetch()
                     .then((msgs) => {
-                        msgs.find((m) => m.author.id === user.id)
-                            .react("✅")
-                            .catch((e) => console.log(e));
+                        msgs.find((m) => m.author.id === user.id).react("✅");
                     })
                     .catch((e) => console.log(e));
 
@@ -108,6 +107,7 @@ module.exports = {
                     communitySupport: "657611656154578944",
                 };
                 const informMessage =
+                    `**You've been accepted to LunarCraft!**\n` +
                     `Hello ${member} and welcome to LunarCraft, we’re glad to have you here. \n\n` +
                     `Some of the key information you’ll need to know is in the “Important” category you can find reaction roles and the link to the live map as well as links to our many different advertising websites. I hope if you enjoy your time here you’ll be kind enough to look through them and upvote 🙂 you can also use prefixes &ip and &map in <#${acceptMessageStuff.general}>  or <#${acceptMessageStuff.botCommands}> , just so you know, the server is ${acceptMessageStuff.mcVersion}.\n\n` +
                     `I would also take a quick look at our <#${acceptMessageStuff.claims}> channel, this is how we “claim” land so there isn’t any confusion on who’s stuff is who’s. This is completely trust based, but we do have ways to make sure your claim stays safe (:\n\n` +
