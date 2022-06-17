@@ -64,6 +64,16 @@ module.exports = {
                 }
 
                 // TODO: React to the user's message with a checkmark in Application channel
+                interaction.client?.guilds.cache
+                    .get("657605715921469477") // Lunarcraft guild
+                    ?.channels.cache.get("672212135505559554") // Application channel
+                    ?.messages.fetch()
+                    .then((msgs) => {
+                        msgs.find((m) => m.author.id === user.id)
+                            .react("✅")
+                            .catch((e) => console.log(e));
+                    })
+                    .catch((e) => console.log(e));
 
                 // DONE: Send the following embed in the log channel
                 logEmbed = new MessageEmbed()
