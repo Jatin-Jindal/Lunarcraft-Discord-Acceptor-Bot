@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { ownerID } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 // const { checkBasic } = require("./checks/check");
 
@@ -20,16 +21,21 @@ module.exports = {
             : ".";
         await interaction.deferReply();
         const checkBasic = (interaction) => {
-            return interaction.channelId === "684908788909867037";
+            return (
+                interaction.channelId === "684908788909867037" ||
+                interaction.channelId === "789566159732604978"
+            );
         };
         const checkRoles = checkBasic(interaction);
+        const specialPerm = interaction.user.id === ownerID;
+        const isQueen = interaction?.member.roles.cache.find(
+            (role) => role.id == "970431543673753601"
+        );
 
-        if (checkRoles) {
-            // TODO: Check if the user has the required permissions
-            // Permissions: (Have "Whitelister" role AND Send in ADMIN category) or "ADMINISTRATOR"
+        if (checkRoles || isQueen || specialPerm) {
             // TODO: React to the user's message with a rejectmark in Application channel
 
-            // TODO: Send the following embed in the log channel
+            // DONE: Send the following embed in the log channel
             logEmbed = new MessageEmbed()
                 .setTitle(`${member.user.username} Rejected`)
                 .setDescription(`${interaction.user} rejected ${member}${reason}`)
@@ -43,11 +49,14 @@ module.exports = {
                     const informMessage = `You were NOT accepted in in Wolf Craft${reason}`;
                     member.send(informMessage);
                     interaction.guild.channels.cache
-                        .get("968805196098592801")
+                        .get("789566159732604978")
                         .send({ embeds: [logEmbed] });
                     member.kick(reason);
                 } catch (error) {
-                    console.error(error);
+                    await interaction.editReply({
+                        content: `Something went wrong.\n{error}`,
+                        ephemeral: true,
+                    });
                 }
             } else {
                 await interaction.editReply({
@@ -56,14 +65,10 @@ module.exports = {
                 });
             }
         } else {
-            try {
-                await interaction.editReply({
-                    content: `https://tenor.com/view/camelot-gif-22738779`,
-                    ephemeral: false,
-                });
-            } catch (error) {
-                console.log(error);
-            }
+            await interaction.editReply({
+                content: `https://tenor.com/view/camelot-gif-22738779`,
+                ephemeral: false,
+            });
         }
     },
 };

@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { ownerID } = require("../../config.json");
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
@@ -30,30 +31,51 @@ module.exports = {
         const user = interaction.options.getUser("member");
         const member = interaction.guild.members.cache.find((member) => member.id === user.id);
         const username = interaction.options.getString("username");
-        const reason = interaction.options.getString("reason") || "Ban Hammer has spoken.";
+        const reason = interaction.options.getString("reason") || "x3 UwU Nya *Bans You OwO*";
         const checkBasic = (interaction) => {
-            return interaction.channelId === "684908788909867037";
+            return (
+                interaction.channelId === "684908788909867037" ||
+                interaction.channelId === "789566159732604978"
+            );
         };
         const checkRoles = checkBasic(interaction);
+        const specialPerm = interaction.user.id === ownerID;
+        const isQueen = interaction?.member.roles.cache.find(
+            (role) => role.id == "970431543673753601"
+        );
         // const checkRoles = true;
 
-        if (checkRoles) {
+        if (checkRoles || isQueen || specialPerm) {
             if (member.bannable) {
                 await interaction.deferReply();
 
                 // TODO: Check if the user has the required permissions
                 // Permissions: (Have "Whitelister" role AND Send in ADMIN category) or "ADMINISTRATOR"
 
-                // TODO: Send the following embed in the log channel
+                // DONE: Send the following embed in the log channel
                 logEmbed = new MessageEmbed()
                     .setTitle(`${member.user.username} Banned`)
                     .setDescription(`${interaction.user} banned ${member}\n**REASON: **${reason}`)
                     .setColor("#7BFA5A");
-                // TODO: Ban the player in console
+                // DONE: Ban the player in console
+                if (username) {
+                    try {
+                        interaction.guild.channels.cache
+                            .get("665965513968582658")
+                            .send(`ban ${username}`);
+                    } catch (error) {
+                        console.log(
+                            `Something went wrong while accepting username = ${username}\n` +
+                                `Error: ${error}\n\n\n` +
+                                "-".repeat(70) +
+                                `\n`
+                        );
+                    }
+                }
 
                 // Inform the user that they have been rejected
                 interaction.guild.channels.cache
-                    .get("968805196098592801")
+                    .get("789566159732604978")
                     .send({ embeds: [logEmbed] });
                 member
                     .ban({
@@ -64,14 +86,14 @@ module.exports = {
 
                 await interaction.editReply(`${member} has been banned from the server.`);
             } else {
-                await interaction.editReply({
+                await interaction.reply({
                     content: `${member} is not bannable. Please contact an administrator.`,
                     ephemeral: true,
                 });
             }
         } else {
             try {
-                await interaction.editReply({
+                await interaction.reply({
                     content: `https://tenor.com/view/camelot-gif-22738779`,
                     ephemeral: false,
                 });

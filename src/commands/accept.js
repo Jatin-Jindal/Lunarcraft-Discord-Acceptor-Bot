@@ -26,12 +26,20 @@ module.exports = {
             needed2: "672073106134794251",
         };
         const checkBasic = (interaction) => {
-            return interaction.channelId === "684908788909867037";
+            return (
+                interaction.channelId === "684908788909867037" ||
+                interaction.channelId === "789566159732604978"
+            );
         };
         const checkRoles = Object.keys(rolesRequired).every((key) => hasRole(rolesRequired[key]));
         const specialPerm = interaction.user.id === ownerID;
-        if (checkBasic(interaction)) {
-            if (checkRoles || specialPerm) {
+        const isQueen = interaction?.member.roles.cache.find(
+            (role) => role.id == "970431543673753601"
+        );
+        console.log(username);
+
+        if (checkBasic(interaction) || isQueen || specialPerm) {
+            if (checkRoles) {
                 // ROLE MANIPULATION STUFF
                 roleToAdd = interaction.guild.roles.cache.find(
                     (role) => role.name === "unneeeded1"
@@ -39,10 +47,25 @@ module.exports = {
                 Object.values(rolesRequired).forEach((roleId) => member.roles.remove(roleId));
                 member.roles.add(roleToAdd);
 
-                // TODO: Send a request to actually whitelist the player IF username is provided
+                // DONE: Send a request to actually whitelist the player IF username is provided
+                if (username) {
+                    try {
+                        interaction.guild.channels.cache
+                            .get("665965513968582658")
+                            .send(`whitelist add ${username}`);
+                    } catch (error) {
+                        console.log(
+                            `Something went wrong while accepting username = ${username}\n` +
+                                `Error: ${error}\n\n\n` +
+                                "-".repeat(70) +
+                                `\n`
+                        );
+                    }
+                }
+
                 // TODO: React to the user's message with a checkmark in Application channel
 
-                // TODO: Send the following embed in the log channel
+                // DONE: Send the following embed in the log channel
                 logEmbed = new MessageEmbed()
                     .setTitle("Application Accepted")
                     .setDescription(
@@ -61,27 +84,29 @@ module.exports = {
                     );
                 }
                 interaction.guild.channels.cache
-                    .get("968805196098592801")
+                    .get("789566159732604978")
                     .send({ embeds: [logEmbed] });
                 await interaction.editReply(`${member} has been accepted into the server.`);
 
                 // Inform the user that they have been accepted
                 const acceptMessageStuff = {
                     general: "657605715921469480",
-                    botCommands: "657605715921469480",
-                    claims: "869554027745148948",
-                    mcVersion: "1.17.1",
+                    botCommands: "729000139355586610",
+                    claims: "979115276887007243",
+                    mcVersion: "1.19",
                     sendChannel: "968805196098592801",
+                    communitySupport: "657611656154578944",
                 };
                 const informMessage =
-                    `Hello ${member} and welcome to WolfCraft, we’re glad to have you here. \n\n` +
-                    `Some of the key information you’ll need to know is in the “Important Information” category you can find reaction roles and link to the live map as well as links to our many different advertising websites. I hope if you enjoy your time here you’ll be kind enough to look through them and upvote 🙂 you can also use prefixes &ip and &map in <#${acceptMessageStuff.general}>  or <#${acceptMessageStuff.botCommands}> , just so you know, the server is ${acceptMessageStuff.mcVersion}.\n\n` +
+                    `Hello ${member} and welcome to LunarCraft, we’re glad to have you here. \n\n` +
+                    `Some of the key information you’ll need to know is in the “Important” category you can find reaction roles and the link to the live map as well as links to our many different advertising websites. I hope if you enjoy your time here you’ll be kind enough to look through them and upvote 🙂 you can also use prefixes &ip and &map in <#${acceptMessageStuff.general}>  or <#${acceptMessageStuff.botCommands}> , just so you know, the server is ${acceptMessageStuff.mcVersion}.\n\n` +
                     `I would also take a quick look at our <#${acceptMessageStuff.claims}> channel, this is how we “claim” land so there isn’t any confusion on who’s stuff is who’s. This is completely trust based, but we do have ways to make sure your claim stays safe (:\n\n` +
                     `Before joining the server I would recommend going through the rules one more time so you can be absolutely sure you won’t accidentally break any of them! \n\n` +
-                    `- if you have any questions ask in the chat or server help 😄`;
-                interaction.guild.channels.cache
-                    .get(acceptMessageStuff.sendChannel)
-                    .send(informMessage);
+                    `- if you have any questions ask in the chat or <#${acceptMessageStuff.communitySupport}> 😄`;
+                member.send(informMessage);
+                // interaction.guild.channels.cache
+                //     .get(acceptMessageStuff.sendChannel)
+                //     .send(informMessage);
             } else {
                 await interaction.editReply(
                     `Can Not accept ${member}${
