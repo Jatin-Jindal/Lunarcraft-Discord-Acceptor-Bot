@@ -1,8 +1,8 @@
-# Wolfcraft Discord Bot
+# Lunarcraft Discord Bot
 
 ## Description
 
-A bot made for the [Wolfcraft Discord Server](https://discord.gg/gXxWwbPWAt "Invite to the Server").
+A bot made for the [Lunarcraft Discord Server](https://discord.gg/gXxWwbPWAt "Invite to the Server").
 
 ### Features
 
@@ -22,8 +22,8 @@ A bot made for the [Wolfcraft Discord Server](https://discord.gg/gXxWwbPWAt "Inv
 
 ### How to Run
 
-1. Get the repository locally `git clone https://github.com/Jatin-Jindal/Wolfcraft-Discord-Acceptor-Bot`
-    - OR get the repository from [here](https://github.com/Jatin-Jindal/Wolfcraft-Discord-Acceptor-Bot/archive/refs/heads/main.zip "Download ZIP")
+1. Get the repository locally `git clone https://github.com/Jatin-Jindal/Lunarcraft-Discord-Acceptor-Bot`
+    - OR get the repository from [here](https://github.com/Jatin-Jindal/Lunarcraft-Discord-Acceptor-Bot/archive/refs/heads/main.zip "Download ZIP")
 1. Add your bot token in the config.json (Based on [config.json.sample](./config.json.sample "Sample config"))
 1. Install the required modules with your preferred package manager:
     - [npm](https://www.npmjs.com "npm")
