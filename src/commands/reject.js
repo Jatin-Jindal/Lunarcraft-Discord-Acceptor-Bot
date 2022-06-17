@@ -33,7 +33,7 @@ module.exports = {
         );
 
         if (checkRoles || isQueen || specialPerm) {
-            // TODO: React to the user's message with a rejectmark in Application channel
+            // DONE: React to the user's message with a rejectmark in Application channel
             interaction.client?.guilds.cache
                 .get("657605715921469477") // Lunarcraft guild
                 ?.channels.cache.get("672212135505559554") // Application channel

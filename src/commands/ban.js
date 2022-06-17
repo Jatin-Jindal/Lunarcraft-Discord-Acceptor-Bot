@@ -49,7 +49,7 @@ module.exports = {
             if (member.bannable) {
                 await interaction.deferReply();
 
-                // TODO: Check if the user has the required permissions
+                // DONE: Check if the user has the required permissions
                 // Permissions: (Have "Whitelister" role AND Send in ADMIN category) or "ADMINISTRATOR"
 
                 // DONE: Send the following embed in the log channel

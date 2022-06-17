@@ -13,7 +13,7 @@ module.exports = {
             option.setName("username").setDescription("The member's in-game username.")
         ),
     async execute(interaction) {
-        // TODO: Check if the user has the required permissions
+        // DONE: Check if the user has the required permissions
         // Permissions: (Have "Whitelister" role AND Send in ADMIN category) or "ADMINISTRATOR"
         const user = interaction.options.getUser("member");
         const member = interaction.guild.members.cache.find((member) => member.id === user.id);
@@ -63,7 +63,7 @@ module.exports = {
                     }
                 }
 
-                // TODO: React to the user's message with a checkmark in Application channel
+                // DONE: React to the user's message with a checkmark in Application channel
                 interaction.client?.guilds.cache
                     .get("657605715921469477") // Lunarcraft guild
                     ?.channels.cache.get("672212135505559554") // Application channel
