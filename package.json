@@ -1,7 +1,7 @@
 {
-    "name": "woofcraft-js",
+    "name": "luwukwaff-js",
     "version": "1.0.0",
-    "description": "Wolfcraft Discord Bot to accept and remove users",
+    "description": "Lunarcraft Discord Bot to accept and remove users",
     "main": "index.js",
     "scripts": {
         "start": "node src/index.js",
